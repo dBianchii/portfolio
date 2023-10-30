@@ -15,13 +15,13 @@ const LOGOS = [
   "skill-icons:prisma",
 ]
 
-export default function FramerMotion() {
+export default function HeroBubbles() {
 
   const numLogos = LOGOS.length;
   const logoAngle = (360 / numLogos) * (Math.PI / 180);
 
   return (
-    <div className='bg-slate-500 flex items-center justify-center w-full h-[300px] shadow'>
+    <div className="bg-slate-800 rounded-xl shadow shadow-black flex items-center justify-center w-[800px] h-[500px] scale-50 md:scale-100">
       <motion.div
         className="z-50 rounded-full"
         whileHover={{ scale: 1.2 }}
@@ -34,16 +34,17 @@ export default function FramerMotion() {
       {
         LOGOS.map((logo, i) => (
           <Ball key={logo + i} angle={i * logoAngle} initialDelay={i * 0.25}>
-            <Icon icon={logo ?? ""} width={100} height={100} />
+            <Icon icon={logo ?? ""} width={80} height={80} />
           </Ball>
         ))
       }
     </div>
+
   );
 }
 
 function Ball({ children, initialDelay = 0, angle = 0 }: { children: React.ReactNode, initialDelay?: number, angle?: number }) {
-  const RADIUS = 300;
+  const RADIUS = 240;
   const controls = useAnimationControls();
 
   // Calculate x and y positions using trigonometry
@@ -80,13 +81,17 @@ function Ball({ children, initialDelay = 0, angle = 0 }: { children: React.React
         });
         await new Promise((resolve) => setTimeout(resolve, 300));
       }
+      
     };
     void initialAnimation();
+    return () => {
+      controls.stop();
+    }
   }, [controls, floatingDuration, initialDelay, x, y])
 
   return (
     <motion.div
-      className="bg-slate-700 border absolute w-40 h-40 rounded-full flex items-center justify-center"
+      className="bg-slate-700 border absolute w-36 h-36 rounded-full flex items-center justify-center"
       whileHover={{ scale: 1.2, opacity: 0.9 }}
       whileTap={{ scale: 1.1 }}
       animate={{...controls }}
