@@ -1,0 +1,103 @@
+"use client"
+
+import { motion, useAnimationControls } from 'framer-motion';
+import { useEffect } from 'react';
+import Image from 'next/image';
+import { Icon } from '@iconify/react';
+
+
+const LOGOS = [
+  "logos:react",
+  "devicon:trpc",
+  "cib:next-js",
+  "logos:tailwindcss-icon",
+  "logos:typescript-icon",
+  "skill-icons:prisma",
+]
+
+export default function FramerMotion() {
+
+  const numLogos = LOGOS.length;
+  const logoAngle = (360 / numLogos) * (Math.PI / 180);
+
+  return (
+    <div className='bg-slate-500 flex items-center justify-center w-full h-[300px] shadow'>
+      <motion.div
+        className="z-50 rounded-full"
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 1.1 }}
+        drag={true}
+        dragConstraints={{ left: 10, right: 10, top: 10, bottom: 10 }}
+      >
+        <Image src={"https://avatars.githubusercontent.com/u/17372417?v=5"} width={160} height={160} alt={'Gabriel Bianchi profile'} className='rounded-full z-50 pointer-events-none' draggable="false" />
+      </motion.div>
+      {
+        LOGOS.map((logo, i) => (
+          <Ball key={logo + i} angle={i * logoAngle} initialDelay={i * 0.25}>
+            <Icon icon={logo ?? ""} width={100} height={100} />
+          </Ball>
+        ))
+      }
+    </div>
+  );
+}
+
+function Ball({ children, initialDelay = 0, angle = 0 }: { children: React.ReactNode, initialDelay?: number, angle?: number }) {
+  const RADIUS = 300;
+  const controls = useAnimationControls();
+
+  // Calculate x and y positions using trigonometry
+  const x = RADIUS * Math.cos(angle);
+  const y = RADIUS * Math.sin(angle);
+
+  // Define a function to move the ball slightly
+  const floatingDuration = Math.random() * 2 + 1; // Randomize duration
+  const floatingAmplitude = 16; // Randomize amplitude
+  
+  useEffect(() => {
+    const initialAnimation = async () => {
+      await controls.start({
+        x,
+        y,
+        transition: { duration: 2, type: 'spring', delay: initialDelay },
+      });
+      void hoverEffect();
+    }
+    const hoverEffect = async () => {
+      while (true) {
+        await controls.start({
+          x: x + (Math.random() * floatingAmplitude - floatingAmplitude / 2),
+          y: y + (Math.random() * floatingAmplitude - floatingAmplitude / 2),
+          rotate: Math.random() * 10 - 5, // Add a random rotation
+          transition: { duration: floatingDuration },
+
+        });
+        await controls.start({
+          x,
+          y,
+          rotate: 0, // Reset rotation
+          transition: { duration: floatingDuration },
+        });
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
+    };
+    void initialAnimation();
+  }, [controls, floatingDuration, initialDelay, x, y])
+
+  return (
+    <motion.div
+      className="bg-slate-700 border absolute w-40 h-40 rounded-full flex items-center justify-center"
+      whileHover={{ scale: 1.2, opacity: 0.9 }}
+      whileTap={{ scale: 1.1 }}
+      animate={{...controls }}
+      drag={true}
+      onDrag={() => controls.stop()}
+      dragConstraints={{ left: x + 10, right: x + 10, top: y + 10, bottom: y + 10 }}
+      initial={{ opacity: 0.8 }} // Set initial opacity to 0.5
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+
