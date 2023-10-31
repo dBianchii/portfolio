@@ -1,4 +1,4 @@
-import HeroBubbles from "./_components/FramerMotion";
+import HeroBubbles from "./_components/hero-bubbles";
 
 export default function HomePage() {
   return (

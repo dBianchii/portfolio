@@ -20,11 +20,17 @@ const logoAngle = (360 / LOGOS.length) * (Math.PI / 180);
 
 export function TechBubbles() {
   return LOGOS.map((logo, i) => (
-    <Bubble key={logo.href} angle={i * logoAngle} initialDelay={i * 0.25}>
-      <Link href={logo.href} draggable={false} target="_blank">
+    <a
+      href={logo.href}
+      draggable={false}
+      target="_blank"
+      key={logo.href}
+      className="absolute"
+    >
+      <Bubble angle={i * logoAngle} initialDelay={i * 0.25}>
         <Icon icon={logo.className} width={80} height={80} />
-      </Link>
-    </Bubble>
+      </Bubble>
+    </a>
   ));
 }
 
@@ -82,18 +88,18 @@ function Bubble({
 
   return (
     <motion.div
-      className="absolute flex h-36 w-36 items-center justify-center rounded-full border bg-slate-700"
-      whileHover={{ scale: 1.2, opacity: 0.9 }}
-      whileTap={{ scale: 1.1 }}
+      className="flex h-32 w-32 items-center justify-center rounded-full border bg-slate-700 transition-colors hover:border-2 hover:border-slate-700 hover:bg-slate-600"
+      whileHover={{ scale: 1.1, opacity: 0.99 }}
+      whileTap={{ scale: 1.05 }}
       animate={{ ...controls }}
-      onDrag={() => controls.stop()}
+      drag
       dragConstraints={{
         left: x + 10,
         right: x + 10,
         top: y + 10,
         bottom: y + 10,
       }}
-      initial={{ opacity: 0.8 }} // Set initial opacity to 0.5
+      initial={{ opacity: 0.8 }}
     >
       {children}
     </motion.div>
