@@ -12,7 +12,7 @@ const LOGOS = [
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 mx-auto flex max-w-7xl items-start justify-between rounded-xl bg-zinc-900 p-5 pt-8 xl:items-center">
+    <header className="sticky top-0 mx-auto flex max-w-7xl items-start justify-between rounded-xl bg-zinc-900 p-5 pt-8 xl:items-center">
       <div className="flex items-center">
         {LOGOS.map(({ Icon, href }, i) => (
           <Link

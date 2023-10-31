@@ -3,19 +3,28 @@
  * for Docker builds.
  */
 await import("./src/env.mjs");
+import rehypePrettyCode from "rehype-pretty-code";
+import nextMDX from "@next/mdx";
 
 /** @type {import("next").NextConfig} */
-const config = {
+const nextConfig = {
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
-        port: "",
-        pathname: "/**",
       },
     ],
   },
 };
 
-export default config;
+const withMDX = nextMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [[rehypePrettyCode, {}]],
+  },
+});
+
+export default withMDX(nextConfig);

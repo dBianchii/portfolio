@@ -1,0 +1,21 @@
+# Migrating a T3 app into a Turborepo
+
+For a while now, we've been getting a lot of requests for including a CLI option to scaffold [create-t3-app](https://github.com/t3-oss/create-t3-app) into a monorepo so that you can share code between your web and mobile application.
+We have turn these requests down due to the added complexity it would bring, and the fact that we do not want to prescribe how to run your monorepo. There are several tooling available for monorepos, including [Lerna](https://lerna.js.org) and [NX](https://nx.dev). Then there's the new kid on the block, [turborepo](https://turborepo.org) which we recently migrated the `create-t3-app` repo into so that we could have our upcoming documentation site in the same repo as the CLI scaffolding tool.
+
+But... I won't let y'all down entirely, so I decided to create a template repo that should help you setup a T3 monorepo. Presenting `create-t3-turbo`. I'll admit the name might be deceiving since it isn't a scaffolding tool like `create-t3-app` is, but instead just a template repo with all the pieces included without any options to pick and choose.
+
+Apologies in advance, this post is going to b
+
+## Initializing your T3 App
+
+For demonstration purposes, I'll start by creating a new T3 app, but you can of course
+use your existing one. Since we're going to be turning this into a monorepo, I'll
+also showcase the ability to enter a scoped appname when using the CLI. I'll assume
+you are already in a git repository and I'll hold off on installing the dependencies
+until we have setup turborepo. Lastly, if you haven't already tried out the `next`
+version of the CLI, try it out - it is... Blazingly Fast™.
+
+```bash
+npm create t3-app@latest apps/@acme/nextjs --noGit --noInstall
+```
