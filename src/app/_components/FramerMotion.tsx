@@ -19,7 +19,7 @@ export default function HeroBubbles() {
   const logoAngle = (360 / numLogos) * (Math.PI / 180);
 
   return (
-    <div className="flex h-[500px] w-[800px] scale-75 items-center justify-center rounded-xl bg-slate-800 shadow shadow-black md:scale-100">
+    <div className="flex h-[500px] w-[800px] scale-[80%] items-center justify-center rounded-xl bg-slate-800 shadow shadow-black md:scale-100">
       <motion.div
         className="z-50 rounded-full"
         whileHover={{ scale: 1.2 }}

@@ -2,7 +2,7 @@ import HeroBubbles from "./_components/FramerMotion";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-slate-600 px-80 py-8 text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center px-80 py-8 text-white">
       <HeroBubbles />
       <section className="h-auto w-full ">
         <h1>asd</h1>
